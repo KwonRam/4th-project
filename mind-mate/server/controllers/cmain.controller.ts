@@ -25,7 +25,7 @@ export default async function test_db(
     // 결과를 클라이언트에게 반환
     res.json(result);
   } catch (err) {
-    console.error('Error fetching enemy deck data:', err);
+    console.error('Error fetching data:', err);
     res.status(500).send('Internal Server Error');
   }
 }
