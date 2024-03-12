@@ -1,16 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import io from 'socket.io-client';
+// src/pages/TestChat.tsx
+import React, { useEffect, useRef, useState } from 'react';
+import { io, Socket } from 'socket.io-client'; // Import io function
 
-const TestChat = () => {
-  const socket = io('http://localhost:4000');
+interface TestChatProps {
+  socket: Socket;
+}
+
+const TestChat: React.FC<TestChatProps> = ({ socket }) => {
+  const socketRef = useRef<Socket | null>(null);
+  const [messages, setMessages] = useState<string[]>([]);
+  const [messageInput, setMessageInput] = useState('');
+
+  useEffect(() => {
+    socketRef.current = io('http://localhost:4000');
+
+    // Use optional chaining to handle null case
+    socketRef.current?.on('message', (message: string) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      // Use optional chaining to handle null case
+      socketRef.current?.disconnect();
+    };
+  }, []);
+
+  const sendMessage = () => {
+    if (socketRef.current && messageInput.trim() !== '') {
+      // Use optional chaining to handle null case
+      socketRef.current?.emit('message', messageInput);
+      console.log('message', messageInput);
+      setMessageInput('');
+    }
+  };
+
   return (
     <div>
-      <h1>내 채팅방</h1>
-      <div className="chat-container" id="chat-container"></div>
-      <div className="input-container">
-        <input type="text" id="input-message" placeholder="메세지 작성"></input>
-        <button id="send-message">채팅</button>
+      <div>
+        <ul>
+          {messages.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <input
+          type="text"
+          value={messageInput}
+          onChange={(e) => setMessageInput(e.target.value)}
+        />
+        <button onClick={sendMessage}>Send</button>
       </div>
     </div>
   );

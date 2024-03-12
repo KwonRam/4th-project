@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div>
       <h1>Main</h1>
-      <Link to="/testchat">HOME</Link>
+      <Link to="/testchat">Enter Chat</Link>
     </div>
   );
 };
