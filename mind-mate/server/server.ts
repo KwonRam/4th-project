@@ -20,7 +20,6 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use('/public', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = 4000;
@@ -29,7 +28,7 @@ app.use(cors());
 app.use('/api', api);
 app.use('/chat', chat);
 
-const httpServer = http.createServer(app);
+const httpServer = createServer(app); // Use createServer directly
 
 const io = new Server(httpServer, {
   cors: {
@@ -37,8 +36,10 @@ const io = new Server(httpServer, {
   },
 });
 
-io.listen(4000);
+io.on('connection', (socket) => {
+  console.log('client connected');
+});
 
-app.listen(PORT, () => {
-  console.log(`Server On: http://localhost:${PORT}/`);
+httpServer.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
