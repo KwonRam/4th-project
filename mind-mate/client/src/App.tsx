@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 //페이지 임포트
 import MainPage from './pages/MainPage';
 import TestDB from './pages/TestDB';
+import TestChat from './pages/TestChat';
 import Error404 from './pages/errors/Error404';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
@@ -16,6 +17,7 @@ function App() {
           <Route path="/signup" element={<SignupPage/>}></Route>
           <Route path='/login' element={<LoginPage/>}></Route>
           <Route path="/testdb" element={<TestDB />}></Route>
+          <Route path="/testchat" element={<TestChat />}></Route>
           <Route path="*" element={<Error404 />}></Route>
         </Routes>
       </BrowserRouter>
