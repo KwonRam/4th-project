@@ -5,6 +5,8 @@ import MainPage from './pages/MainPage';
 import TestDB from './pages/TestDB';
 import TestChat from './pages/TestChat';
 import Error404 from './pages/errors/Error404';
+import SignupPage from './pages/SignupPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
+          <Route path="/signup" element={<SignupPage/>}></Route>
+          <Route path='/login' element={<LoginPage/>}></Route>
           <Route path="/testdb" element={<TestDB />}></Route>
           <Route path="/testchat" element={<TestChat />}></Route>
           <Route path="*" element={<Error404 />}></Route>
